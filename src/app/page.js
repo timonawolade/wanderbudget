@@ -111,6 +111,7 @@ export default function Home() {
   const [vibes, setVibes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [hasLiveData, setHasLiveData] = useState(false);
   const [error, setError] = useState(null);
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -180,6 +181,7 @@ export default function Home() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Failed to generate plan");
       setResult(data.plan);
+      setHasLiveData(data.hasLiveData || false);
     } catch (err) {
       setError(err.message || "Something went wrong. Please try again.");
     }
@@ -591,6 +593,19 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
+            {/* Live data badge */}
+            {hasLiveData && (
+              <div className="flex items-center justify-center gap-2 mb-4 bg-green-500/10 border border-green-500/25 rounded-full py-2.5 px-5 mx-auto w-fit">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                </span>
+                <span className="text-sm font-semibold text-green-300">
+                  Live prices fetched from the web · Powered by Nimble
+                </span>
+              </div>
+            )}
 
             {/* Itinerary card */}
             <div className="bg-[#fffbf8] rounded-3xl p-7 md:p-8 text-[#2a2a3a] shadow-2xl leading-relaxed text-[15px]">

@@ -1,13 +1,35 @@
 import { NextResponse } from "next/server";
+import { fetchLiveTravelData } from "@/lib/nimble";
 
 export async function POST(request) {
   try {
     const { budget, currency, currencySymbol, origin, destination, destMode, style, vibes } =
       await request.json();
 
-    // Validate inputs
     if (!budget || !currency || !origin || !style || !vibes?.length) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    // ── STEP 1: Fetch LIVE web data via Nimble (real hotel & flight prices) ──
+    const liveData = await fetchLiveTravelData({
+      destination: destMode === "choose" ? destination : "surprise",
+      origin,
+      currency,
+    });
+
+    let liveDataBlock = "";
+    if (liveData.hasLiveData) {
+      liveDataBlock = `
+
+IMPORTANT — USE THIS LIVE WEB DATA (fetched in real-time just now):
+
+LIVE HOTEL PRICING DATA:
+${liveData.hotels || "No live hotel data available."}
+
+LIVE FLIGHT PRICING DATA:
+${liveData.flights || "No live flight data available."}
+
+Base your hotel and flight cost estimates on this REAL, CURRENT data above. Reference actual prices found. If the live data mentions specific hotels or prices, use them.`;
     }
 
     const destText =
@@ -23,6 +45,7 @@ INPUTS:
 - Destination: ${destText}
 - Travel Style: ${style}
 - Preferred Vibes: ${vibes.join(", ")}
+${liveDataBlock}
 
 Create a COMPLETE travel plan STRICTLY within their budget. Use this EXACT structure:
 
@@ -82,9 +105,8 @@ Create a COMPLETE travel plan STRICTLY within their budget. Use this EXACT struc
 
 Use REAL place names, REAL hotel suggestions, REAL restaurant areas. Be specific enough that someone could book this trip TODAY. All costs in ${currency}.`;
 
-    // Use Claude API (swap to Qwen by changing provider)
+    // ── STEP 2: Generate the plan with the AI provider ──
     const provider = process.env.AI_PROVIDER || "claude";
-
     let responseText;
 
     if (provider === "claude") {
@@ -111,7 +133,6 @@ Use REAL place names, REAL hotel suggestions, REAL restaurant areas. Be specific
       const data = await res.json();
       responseText = data.content?.map((c) => c.text || "").join("") || "";
     } else if (provider === "qwen") {
-      // Qwen Cloud API integration
       const res = await fetch("https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -134,7 +155,10 @@ Use REAL place names, REAL hotel suggestions, REAL restaurant areas. Be specific
       throw new Error("No response from AI provider");
     }
 
-    return NextResponse.json({ plan: responseText });
+    return NextResponse.json({
+      plan: responseText,
+      hasLiveData: liveData.hasLiveData,
+    });
   } catch (err) {
     console.error("Generate error:", err);
     return NextResponse.json(

@@ -59,9 +59,9 @@ export const POPULAR_DESTINATIONS = [
 ];
 
 export const LOADING_MESSAGES = [
+  "Fetching live hotel & flight prices...",
   "Scanning the globe for your perfect match...",
-  "Comparing flights, hotels & hidden gems...",
-  "Crunching numbers across time zones...",
+  "Comparing real prices across the web...",
   "Handcrafting your day-by-day itinerary...",
   "Almost there — polishing your adventure...",
 ];
