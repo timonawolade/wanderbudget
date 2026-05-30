@@ -112,6 +112,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [hasLiveData, setHasLiveData] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [shareUrl, setShareUrl] = useState(null);
   const [error, setError] = useState(null);
   const [loadingMsg, setLoadingMsg] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -209,12 +211,45 @@ export default function Home() {
     setError(null);
     setLoading(false);
     setCopied(false);
+    setShareUrl(null);
   };
 
   const copyItinerary = () => {
     navigator.clipboard?.writeText(result);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const saveTrip = async () => {
+    setSaving(true);
+    try {
+      const curr = CURRENCIES[currency];
+      const selectedStyle = TRAVEL_STYLES.find((s) => s.id === style);
+      const res = await fetch("/api/trips", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          plan: result,
+          budget,
+          currency,
+          currencySymbol: curr.symbol,
+          origin,
+          destination: destMode === "choose" ? destination : "",
+          destMode,
+          style: selectedStyle?.label || style,
+          vibes: vibes.map((v) => VIBES.find((vb) => vb.id === v)?.label),
+          hasLiveData,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      const url = `${window.location.origin}/trip/${data.tripId}`;
+      setShareUrl(url);
+      navigator.clipboard?.writeText(url);
+    } catch (err) {
+      console.error("Save failed:", err);
+    }
+    setSaving(false);
   };
 
   // ── Landing Page ──
@@ -622,11 +657,40 @@ export default function Home() {
               </button>
               <button
                 onClick={copyItinerary}
-                className="flex-1 py-4 rounded-xl bg-gradient-to-r from-accent to-accent-light text-white font-bold shadow-lg shadow-accent/30 hover:shadow-xl transition-all active:scale-[0.98]"
+                className="flex-1 py-4 rounded-xl border border-white/15 text-cream font-semibold hover:bg-white/5 transition-colors"
               >
-                {copied ? "✅ Copied!" : "📋 Copy Itinerary"}
+                {copied ? "✅ Copied!" : "📋 Copy"}
+              </button>
+              <button
+                onClick={saveTrip}
+                disabled={saving || shareUrl}
+                className="flex-1 py-4 rounded-xl bg-gradient-to-r from-accent to-accent-light text-white font-bold shadow-lg shadow-accent/30 hover:shadow-xl transition-all active:scale-[0.98] disabled:opacity-60"
+              >
+                {saving ? "💾 Saving..." : shareUrl ? "✅ Saved!" : "💾 Save & Share"}
               </button>
             </div>
+
+            {/* Share URL display */}
+            {shareUrl && (
+              <div className="mt-4 bg-accent/10 border border-accent/20 rounded-2xl p-4 animate-fade-in">
+                <p className="text-xs text-cream/50 mb-2 uppercase tracking-wider">🔗 Shareable link (copied to clipboard)</p>
+                <div className="flex items-center gap-2">
+                  <input
+                    readOnly
+                    value={shareUrl}
+                    onClick={(e) => e.target.select()}
+                    className="flex-1 bg-white/5 border border-white/10 rounded-lg py-2.5 px-3 text-sm text-cream font-mono outline-none"
+                  />
+                  <button
+                    onClick={() => { navigator.clipboard?.writeText(shareUrl); }}
+                    className="py-2.5 px-4 rounded-lg bg-accent/20 border border-accent/30 text-orange-200 text-sm font-semibold hover:bg-accent/30 transition-colors whitespace-nowrap"
+                  >
+                    Copy
+                  </button>
+                </div>
+                <p className="text-xs text-cream/40 mt-2">Anyone with this link can view your full itinerary — share it with your travel companions!</p>
+              </div>
+            )}
           </div>
         )}
       </div>
