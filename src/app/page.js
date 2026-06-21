@@ -259,10 +259,14 @@ export default function Home() {
         <div className="max-w-2xl mx-auto px-5 py-16 text-center">
           {/* Logo */}
           <div className="flex items-center justify-center gap-4 mb-6 animate-fade-in">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-accent-light flex items-center justify-center text-3xl shadow-lg shadow-accent/30">
-              🧭
+           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-accent to-accent-light flex items-center justify-center shadow-lg shadow-accent/30">
+              <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#0A0F2A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <polygon points="12,6 14,13 12,11.2 10,13" fill="#0A0F2A" stroke="none" />
+                <circle cx="12" cy="12" r="0.9" fill="#0A0F2A" stroke="none" />
+              </svg>
             </div>
-            <h1 className="font-display text-5xl md:text-6xl font-bold bg-gradient-to-r from-cream to-orange-200 bg-clip-text text-transparent">
+            <h1 className="font-display text-5xl md:text-6xl font-bold bg-gradient-to-r from-cream to-accent-light bg-clip-text text-transparent">
               Orbit Vacations
             </h1>
           </div>
@@ -274,16 +278,28 @@ export default function Home() {
           {/* Features */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-14 text-left">
             {[
-              { emoji: "💰", title: "Budget-First", desc: "Set your budget, we find the perfect trip that fits." },
-              { emoji: "🤖", title: "AI-Powered", desc: "Smart itineraries with real hotel & flight estimates." },
-              { emoji: "📋", title: "Day-by-Day", desc: "Complete plans you can book today. No guesswork." },
+            { icon: (
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#F3C265" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="6" width="18" height="13" rx="2.5" /><path d="M3 9.5 h18" /><circle cx="16.5" cy="13.5" r="1.4" fill="#F3C265" stroke="none" />
+                </svg>
+              ), title: "Budget-First", desc: "Set your budget, we find the perfect trip that fits." },
+              { icon: (
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#F3C265" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3.5 L13.7 10.3 L20.5 12 L13.7 13.7 L12 20.5 L10.3 13.7 L3.5 12 L10.3 10.3 Z" />
+                </svg>
+              ), title: "AI-Powered", desc: "Smart itineraries with real hotel & flight estimates." },
+              { icon: (
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#F3C265" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="4" y="5" width="16" height="15" rx="2.5" /><path d="M4 9.5 h16 M8 3 v3 M16 3 v3" /><circle cx="9" cy="13.5" r="1" fill="#F3C265" stroke="none" /><circle cx="13.5" cy="13.5" r="1" fill="#F3C265" stroke="none" /><circle cx="9" cy="17" r="1" fill="#F3C265" stroke="none" />
+                </svg>
+              ), title: "Day-by-Day", desc: "Complete plans you can book today. No guesswork." },
             ].map((f, i) => (
               <div
                 key={i}
                 className="bg-white/5 border border-white/10 rounded-2xl p-6 animate-slide-up"
                 style={{ animationDelay: `${0.2 + i * 0.1}s` }}
               >
-                <div className="text-3xl mb-3">{f.emoji}</div>
+              <div className="mb-3">{f.icon}</div>
                 <h3 className="font-semibold text-base mb-1">{f.title}</h3>
                 <p className="text-sm text-cream/50">{f.desc}</p>
               </div>
@@ -293,10 +309,15 @@ export default function Home() {
           {/* CTA */}
           <button
             onClick={() => setStep(0)}
-            className="animate-slide-up bg-gradient-to-r from-accent to-accent-light text-white text-lg font-bold py-4 px-12 rounded-2xl shadow-lg shadow-accent/40 hover:shadow-xl hover:shadow-accent/50 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="animate-slide-up bg-gradient-to-r from-accent to-accent-light text-dark text-lg font-bold py-4 px-12 rounded-2xl shadow-lg shadow-accent/40 hover:shadow-xl hover:shadow-accent/50 transition-all hover:scale-[1.02] active:scale-[0.98]"
             style={{ animationDelay: "0.5s" }}
           >
-            🧭 Plan My Trip — Free
+            <span className="inline-flex items-center justify-center gap-2.5">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0A0F2A" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="9" /><polygon points="12,6 14,13 12,11.2 10,13" fill="#0A0F2A" stroke="none" />
+              </svg>
+              Plan My Trip — Free
+            </span>
           </button>
 
           <p className="text-xs text-cream/30 mt-6">
@@ -317,10 +338,12 @@ export default function Home() {
       {/* Header */}
       <div className="pt-8 pb-4 text-center">
         <div className="flex items-center justify-center gap-3 mb-2 cursor-pointer" onClick={() => setStep(-1)}>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-light flex items-center justify-center text-xl shadow-md shadow-accent/30">
-            🧭
-          </div>
-          <h1 className="font-display text-3xl font-bold bg-gradient-to-r from-cream to-orange-200 bg-clip-text text-transparent">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-accent-light flex items-center justify-center shadow-md shadow-accent/30">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#0A0F2A" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="9" /><polygon points="12,6 14,13 12,11.2 10,13" fill="#0A0F2A" stroke="none" />
+              </svg>
+            </div>
+          <h1 className="font-display text-3xl font-bold bg-gradient-to-r from-cream to-accent-light bg-clip-text text-transparent">
             Orbit Vacations
           </h1>
         </div>
@@ -339,12 +362,12 @@ export default function Home() {
                 width: i === step ? 36 : 10,
                 background:
                   i < step
-                    ? "#e8613c"
+                    ? "#F3C265"
                     : i === step
-                    ? "linear-gradient(90deg, #e8613c, #f4845f)"
+                    ? "linear-gradient(90deg, #F3C265, #FFD588)"
                     : "rgba(255,255,255,0.08)",
                 cursor: i < step ? "pointer" : "default",
-                boxShadow: i === step ? "0 0 12px rgba(232,97,60,0.35)" : "none",
+                boxShadow: i === step ? "0 0 12px rgba(243,194,101,0.4)" : "none",
               }}
             />
           ))}
@@ -389,12 +412,12 @@ export default function Home() {
                 </div>
                 {budget && parseFloat(budget) > 0 && parseFloat(budget) < 100 && (
                   <p className="text-yellow-300 text-sm">
-                    ⚠️ Minimum budget: {CURRENCIES[currency].symbol}100
+                    Minimum budget: {CURRENCIES[currency].symbol}100
                   </p>
                 )}
                 {budget && parseFloat(budget) >= 100 && (
-                  <div className="bg-accent/10 border border-accent/20 rounded-xl py-3 px-4 text-sm text-orange-200">
-                    💡 That's roughly{" "}
+                   <div className="bg-accent/10 border border-accent/20 rounded-xl py-3 px-4 text-sm text-accent-light">
+                    That's roughly{" "}
                     <strong>
                       ${Math.round(parseFloat(budget) / CURRENCIES[currency].rate).toLocaleString()} USD
                     </strong>{" "}
@@ -431,8 +454,32 @@ export default function Home() {
 
                 <div className="flex gap-3 mb-6">
                   {[
-                    { mode: "surprise", emoji: "🎲", title: "Surprise Me!", sub: "AI picks the best destination" },
-                    { mode: "choose", emoji: "📍", title: "I Know Where", sub: "I have a place in mind" },
+                    {
+                      mode: "surprise",
+                      icon: (
+                        <svg className="w-8 h-8 mx-auto mb-2" viewBox="0 0 24 24" fill="none" stroke="#F3C265" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="3" width="18" height="18" rx="4" />
+                          <circle cx="8.5" cy="8.5" r="1.1" fill="#F3C265" stroke="none" />
+                          <circle cx="15.5" cy="8.5" r="1.1" fill="#F3C265" stroke="none" />
+                          <circle cx="12" cy="12" r="1.1" fill="#F3C265" stroke="none" />
+                          <circle cx="8.5" cy="15.5" r="1.1" fill="#F3C265" stroke="none" />
+                          <circle cx="15.5" cy="15.5" r="1.1" fill="#F3C265" stroke="none" />
+                        </svg>
+                      ),
+                      title: "Surprise Me!",
+                      sub: "AI picks the best destination",
+                    },
+                    {
+                      mode: "choose",
+                      icon: (
+                        <svg className="w-8 h-8 mx-auto mb-2" viewBox="0 0 24 24" fill="none" stroke="#F3C265" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11z" />
+                          <circle cx="12" cy="10" r="2.5" />
+                        </svg>
+                      ),
+                      title: "I Know Where",
+                      sub: "I have a place in mind",
+                    },
                   ].map((opt) => (
                     <div
                       key={opt.mode}
@@ -446,7 +493,7 @@ export default function Home() {
                           : "border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]"
                       }`}
                     >
-                      <div className="text-3xl mb-2">{opt.emoji}</div>
+                      {opt.icon}
                       <div className="font-bold text-sm">{opt.title}</div>
                       <div className="text-xs text-cream/40 mt-1">{opt.sub}</div>
                     </div>
@@ -486,7 +533,7 @@ export default function Home() {
                 {destMode === "surprise" && (
                   <div className="bg-accent/[0.06] border border-accent/15 rounded-2xl p-5 text-center">
                     <p className="text-sm text-cream/60">
-                      🌍 We'll analyze your budget, travel style, and vibes to recommend the{" "}
+                      We'll analyze your budget, travel style, and vibes to recommend the{" "}
                       <strong className="text-cream/80">perfect destination</strong> you might not have considered!
                     </p>
                   </div>
@@ -572,11 +619,11 @@ export default function Home() {
                 disabled={!canProceed()}
                 className={`flex-1 py-3.5 px-6 rounded-xl font-bold text-base transition-all ${
                   canProceed()
-                    ? "bg-gradient-to-r from-accent to-accent-light text-white shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/40 active:scale-[0.98]"
+                    ? "bg-gradient-to-r from-accent to-accent-light text-dark shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/40 active:scale-[0.98]"
                     : "bg-white/5 text-cream/20 cursor-not-allowed"
                 }`}
               >
-                {step === TOTAL_STEPS - 1 ? "🧭 Generate My Trip" : "Continue →"}
+                {step === TOTAL_STEPS - 1 ? "Generate My Trip" : "Continue →"}
               </button>
             </div>
           </div>
@@ -588,7 +635,12 @@ export default function Home() {
             <div className="relative w-20 h-20 mx-auto mb-8">
               <div className="absolute inset-0 rounded-full border-[3px] border-white/5 border-t-accent animate-[spin_1s_linear_infinite]" />
               <div className="absolute inset-2 rounded-full border-2 border-white/[0.03] border-b-accent-light animate-[spin_1.5s_linear_infinite_reverse]" />
-              <div className="absolute inset-0 flex items-center justify-center text-2xl">🧭</div>
+               <div className="absolute inset-0 flex items-center justify-center">
+                <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="#F3C265" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <polygon points="15.5 8.5 11 11 8.5 15.5 13 13" fill="#F3C265" stroke="none" />
+                </svg>
+              </div>
             </div>
             <p className="font-display text-xl mb-2 min-h-[28px]">{LOADING_MESSAGES[loadingMsg]}</p>
             <p className="text-sm text-cream/30">This usually takes 15–30 seconds</p>
@@ -598,10 +650,10 @@ export default function Home() {
         {/* Error */}
         {error && (
           <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-7 text-center animate-fade-in">
-            <p className="mb-4 text-base">😕 {error}</p>
+            <p className="mb-4 text-base">{error}</p>
             <button
               onClick={generatePlan}
-              className="py-3 px-8 rounded-xl bg-gradient-to-r from-accent to-accent-light text-white font-bold hover:shadow-lg transition-all"
+              className="py-3 px-8 rounded-xl bg-gradient-to-r from-accent to-accent-light text-dark font-bold hover:shadow-lg transition-all"
             >
               Try Again
             </button>
@@ -653,27 +705,27 @@ export default function Home() {
                 onClick={reset}
                 className="flex-1 py-4 rounded-xl border border-white/15 text-cream font-semibold hover:bg-white/5 transition-colors"
               >
-                🔄 New Trip
+                New Trip
               </button>
               <button
                 onClick={copyItinerary}
                 className="flex-1 py-4 rounded-xl border border-white/15 text-cream font-semibold hover:bg-white/5 transition-colors"
               >
-                {copied ? "✅ Copied!" : "📋 Copy"}
+                {copied ? "Copied!" : "Copy"}
               </button>
               <button
                 onClick={saveTrip}
                 disabled={saving || shareUrl}
-                className="flex-1 py-4 rounded-xl bg-gradient-to-r from-accent to-accent-light text-white font-bold shadow-lg shadow-accent/30 hover:shadow-xl transition-all active:scale-[0.98] disabled:opacity-60"
+                className="flex-1 py-4 rounded-xl bg-gradient-to-r from-accent to-accent-light text-dark font-bold shadow-lg shadow-accent/30 hover:shadow-xl transition-all active:scale-[0.98] disabled:opacity-60"
               >
-                {saving ? "💾 Saving..." : shareUrl ? "✅ Saved!" : "💾 Save & Share"}
+                {saving ? "Saving..." : shareUrl ? "Saved!" : "Save & Share"}
               </button>
             </div>
 
             {/* Share URL display */}
             {shareUrl && (
               <div className="mt-4 bg-accent/10 border border-accent/20 rounded-2xl p-4 animate-fade-in">
-                <p className="text-xs text-cream/50 mb-2 uppercase tracking-wider">🔗 Shareable link (copied to clipboard)</p>
+                <p className="text-xs text-cream/50 mb-2 uppercase tracking-wider">Shareable link (copied to clipboard)</p>
                 <div className="flex items-center gap-2">
                   <input
                     readOnly
@@ -683,7 +735,7 @@ export default function Home() {
                   />
                   <button
                     onClick={() => { navigator.clipboard?.writeText(shareUrl); }}
-                    className="py-2.5 px-4 rounded-lg bg-accent/20 border border-accent/30 text-orange-200 text-sm font-semibold hover:bg-accent/30 transition-colors whitespace-nowrap"
+                    className="py-2.5 px-4 rounded-lg bg-accent/20 border border-accent/30 text-accent-light text-sm font-semibold hover:bg-accent/30 transition-colors whitespace-nowrap"
                   >
                     Copy
                   </button>

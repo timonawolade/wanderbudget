@@ -4,22 +4,23 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ["'Playfair Display'", "Georgia", "serif"],
+        display: ["'Sora'", "'Helvetica Neue'", "sans-serif"],
         body: ["'DM Sans'", "'Helvetica Neue'", "sans-serif"],
+        mono: ["'JetBrains Mono'", "ui-monospace", "monospace"],
       },
       colors: {
         accent: {
-          DEFAULT: "#e8613c",
-          light: "#f4845f",
-          soft: "#fff0eb",
-          glow: "rgba(232,97,60,0.35)",
+          DEFAULT: "#F3C265",
+          light: "#FFD588",
+          soft: "rgba(243,194,101,0.10)",
+          glow: "rgba(243,194,101,0.35)",
         },
         dark: {
-          DEFAULT: "#1a1a2e",
-          mid: "#16213e",
-          deep: "#0f3460",
+          DEFAULT: "#0A0F2A",
+          mid: "#0E1437",
+          deep: "#151D48",
         },
-        cream: "#f5f0eb",
+        cream: "#F4F2EA",
       },
     },
   },
