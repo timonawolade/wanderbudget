@@ -557,7 +557,7 @@ export default function Home() {
                           : "border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04]"
                       }`}
                     >
-                      <span className="text-4xl">{s.emoji}</span>
+                      {s.icon}
                       <div>
                         <div className="font-bold text-base">{s.label}</div>
                         <div className="text-cream/40 text-sm mt-0.5">{s.desc}</div>
@@ -590,7 +590,7 @@ export default function Home() {
                             : "border-white/[0.06] bg-white/[0.02] hover:bg-white/[0.04] cursor-pointer"
                         }`}
                       >
-                        <div className="text-3xl mb-1.5">{v.emoji}</div>
+                        {v.icon}
                         <div className="text-xs font-semibold">{v.label}</div>
                       </div>
                     );
@@ -598,7 +598,7 @@ export default function Home() {
                 </div>
                 {vibes.length > 0 && (
                   <p className="mt-4 text-center text-sm text-cream/40">
-                    {vibes.map((v) => VIBES.find((vb) => vb.id === v)?.emoji).join(" ")} ({vibes.length}/3 selected)
+                    {vibes.map((v) => VIBES.find((vb) => vb.id === v)?.label).join(" · ")} ({vibes.length}/3)
                   </p>
                 )}
               </div>
@@ -667,7 +667,7 @@ export default function Home() {
             <div className="flex gap-2.5 mb-5 flex-wrap">
               {[
                 { label: "Budget", val: `${CURRENCIES[currency].symbol}${parseFloat(budget).toLocaleString()}` },
-                { label: "Style", val: `${TRAVEL_STYLES.find((s) => s.id === style)?.emoji} ${TRAVEL_STYLES.find((s) => s.id === style)?.label}` },
+                { label: "Style", val: TRAVEL_STYLES.find((s) => s.id === style)?.label },
                 { label: "From", val: origin },
                 ...(destMode === "choose" ? [{ label: "To", val: destination }] : []),
               ].map((item, i) => (
